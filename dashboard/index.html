@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Employee Dashboard | TBA</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+
+<body>
+    <header>
+        <h1>The Better Animal Association</h1>
+        <nav>
+          <a href="../index/index.html">Home</a>
+          <a href="../about/index.html">About</a>
+          <a href="../adopt/index.html">Adopt</a>
+          <a href="../login/index.html">Employee Login</a>
+        </nav>
+    </header>
+
+  <main>
+    <section class="dashboard">
+        <h2>Employee Portal</h2>
+
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <h3>Adoption Submissions</h3>
+                <p>View submitted adoption forms.</p>
+                <a href="../view-submissions/index.html" class="button"> View Submissions</a>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>Animal Listings</h3>
+                <p> Add, edit, or remove aninmals from the adoption page.</p>
+                <a href="../manage-animals/index.html" class="button">Manage Animals</a>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>Special Cases</h3>
+                <p>Mark animals with medical or behavioral needs.</p>
+                <a href="../special-needs/index.html" class="button">View Special Needs</a>
+            </div>
+        </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 TBA - The Better Animal Association</p>
+  </footer>
+
+  <!--
+  <script>
+    if (localStorage.getItem("loggedIn") !== "true") {
+      alert("You must log in first.");
+      window.location.href = "login.html";
+    }
+  </script>
+  -->
+
+</body>
+</html>

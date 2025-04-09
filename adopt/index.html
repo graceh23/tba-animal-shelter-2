@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Adopt an Animal | TBA</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+    <header>
+        <h1>The Better Animal Association</h1>
+        <nav>
+          <a href="../index/index.html">Home</a>
+          <a href="../about/index.html">About</a>
+          <a href="../adopt/index.html">Adopt</a>
+          <a href="../login/index.html">Employee Login</a>
+        </nav>
+    </header>
+
+  <main>
+    <section class="adopt-form-section">
+        <h2>Adoption Application</h2>
+        <form action="#" method="POST" class="adopt-form">
+            <label for="fullName">Full Name:</label>
+            <input type="text" id="fullName" name="fullName" required />
+
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required />
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" />
+
+            <!-- animal selection-->
+             <label for="animal">Which animal are you interested in?</label>
+             <input type="text" id="animal" name="animal" placeholder="e.g., Fluffy the Cat" required />
+
+             <!-- Housing questions-->
+
+             <label for="housing">Do you rent or own your home?</label>
+             <select id="housing" name="housing">
+                <option value="own">Own</option>
+                <option value="rent">Rent</option>
+             </select>
+
+             <!-- Reason for adoption-->
+             <label for="reason">Why do you want to adopt?</label>
+             <textarea id="reason" name="reason" rows="4" required></textarea>
+     
+             <!-- Agreement -->
+             <label>
+               <input type="checkbox" name="agreement" required />
+               I agree to provide proper care and love to the adopted animal.
+             </label>
+     
+             <button type="submit">Submit Application</button>
+        </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 TBA - The Better Animal Association</p>
+  </footer>
+
+  <script>
+    const adoptForm = document.getElementById("adopt-form");
+
+    // Retrieve submissions from localStorage
+    let submissions = JSON.parse(localStorage.getItem("submissions")) || [];
+
+    adoptForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const applicantName = document.getElementById("applicantName").value;
+    const animal = document.getElementById("animal").value;
+    const adoptDate = document.getElementById("adoptDate").value;
+
+    const newSubmission = {
+        id: submissions.length + 1,
+        applicantName,
+        animal,
+        date: adoptDate,
+        status: "Pending"
+    };
+
+    // Add new submission to the submissions array
+    submissions.push(newSubmission);
+
+    // Save to localStorage
+    localStorage.setItem("submissions", JSON.stringify(submissions));
+
+    // Log submissions to console for debugging
+    console.log("Updated submissions: ", submissions);
+
+    alert("Your adoption application has been submitted!");
+    adoptForm.reset(); // Reset form after submission
+});
+</script>
+
+</body>
+</html>

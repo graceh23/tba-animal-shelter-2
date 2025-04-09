@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Animals | TBA</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+    <header>
+        <h1>Welcome, Employee!</h1>
+        <nav>
+          <a href="../index/index.html">Home</a>
+          <a href="../dashboard/index.html">Back to Dashboard</a>
+          <a href="../login/index.html">Log Out</a>
+        </nav>
+    </header>
+
+  <main>
+    <section class="manage-animals-section">
+      <h2>Add New Animal</h2>
+      <form id="add-animal-form" class="manage-form">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required />
+
+        <label for="species">Species:</label>
+        <input type="text" id="species" required />
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" required />
+
+        <label for="breed">Breed:</label>
+        <input type="text" id="breed" required />
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" required>
+          <option value="Female">Female</option>
+          <option value="Male">Male</option>
+       </select>
+
+       <label for ="fix">Spayed or Neutered?</label>
+       <select id="fix" name="fix" required>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+       </select>
+
+        <label for="desc">Description:</label>
+        <textarea id="desc" required></textarea>
+
+        <label for="fee">Fee:</label>
+        <input type="text" id="fee" required />
+
+        <!-- Image Upload Field -->
+        <label for="image">Upload Image:</label>
+        <input type="file" id="image" accept="image/*" />
+
+        <button type="submit">Add Animal</button>
+      </form>
+
+      <h2>Current Animals</h2>
+      <ul id="animal-list">
+        <!-- Animal list will appear here -->
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 TBA - The Better Animal Association</p>
+  </footer>
+
+  <script>
+    // Retrieve animals from localStorage (or use an empty array if none exists)
+    const storedAnimals = JSON.parse(localStorage.getItem("animals")) || [];
+  
+    const addAnimalForm = document.getElementById("add-animal-form");
+    const animalList = document.getElementById("animal-list");
+  
+    // Function to display animals
+    function displayAnimals() {
+      animalList.innerHTML = "";
+      storedAnimals.forEach((animal, index) => {
+        const li = document.createElement("li");
+  
+        // If image exists, show it
+        let imageHtml = animal.image ? `<img src="${animal.image}" alt="Animal Image" width="100" height="100" />` : "";
+  
+        li.innerHTML = `
+          ${imageHtml}
+          <strong>${animal.name}</strong> - ${animal.species}, ${animal.breed}, ${animal.age} years old, ${animal.gender}, Spayed/Neutered:${animal.fix}, ${animal.desc}, $ ${animal.fee},
+          <button onclick="editAnimal(${index})">Edit</button>
+          <button onclick="deleteAnimal(${index})">Delete</button>
+        `;
+        animalList.appendChild(li);
+      });
+    }
+  
+    // Add new animal to list
+    addAnimalForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+  
+      const name = document.getElementById("name").value;
+      const species = document.getElementById("species").value;
+      const age = document.getElementById("age").value;
+      const breed = document.getElementById("breed").value;
+      const gender = document.getElementById("gender").value;
+      const fix = document.getElementById("fix").value;
+      const desc = document.getElementById("desc").value;
+      const fee = document.getElementById("fee").value;
+      const imageInput = document.getElementById("image");
+      let image = null;
+  
+      // Check if an image is uploaded and convert to base64
+      if (imageInput.files && imageInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          image = e.target.result;
+  
+          // After image is read, create the new animal and store it
+          const newAnimal = { name, species, age, breed, gender, fix, desc, fee, image };
+          storedAnimals.push(newAnimal);
+          localStorage.setItem("animals", JSON.stringify(storedAnimals));
+  
+          // Generate a separate page
+          createAnimalPage(newAnimal);
+  
+          displayAnimals(); // Refresh animal list after adding new one
+          addAnimalForm.reset(); // Reset form after submission
+        };
+        reader.readAsDataURL(imageInput.files[0]);
+      } else {
+        // If no image, still add the animal without an image
+        const newAnimal = { name, species, age, breed, gender, fix, desc, fee, image: null };
+        storedAnimals.push(newAnimal);
+        localStorage.setItem("animals", JSON.stringify(storedAnimals));
+  
+        displayAnimals(); // Refresh animal list after adding new one
+        addAnimalForm.reset(); // Reset form after submission
+      }
+    });
+  
+    // Function that creates a new animal details page
+    function createAnimalPage(animal) {
+      const animalPageContent = `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+          <title>${animal.name} | TBA Animal Details</title>
+          <link rel="stylesheet" href="style.css" />
+        </head>
+        <body>
+          <header>
+            <h1>The Better Animal Association</h1>
+            <nav>
+              <a href="index.html">Home</a>
+              <a href="about.html">About</a>
+              <a href="adopt.html">Adopt</a>
+              <a href="login.html">Employee Login</a>
+            </nav>
+          </header>
+  
+          <main>
+            <section class="animal-profile">
+              <img src="${animal.image || 'images/default-animal.jpg'}" alt="${animal.name}" class="animal-image" />
+              <div class="animal-info">
+                <h2>${animal.name}</h2>
+                <ul>
+                  <li>Species: ${animal.species}</li>
+                  <li>Breed: ${animal.breed}</li>
+                  <li>Age: ${animal.age} years old</li>
+                  <li>Gender: ${animal.gender}</li>
+                  <li>Fixed/Neutered: ${animal.fix}</li>
+                  <li>Special Needs: ${animal.specialNeeds || 'None'}</li>
+                  <li>Description: ${animal.desc}</li>
+                  <li>Fee: $${animal.fee}
+                </ul>
+                <a href="adopt.html" class="adopt-button">Adopt!</a>
+              </div>
+            </section>
+          </main>
+  
+          <footer>
+            <p>&copy; 2025 TBA - The Better Animal Association</p>
+          </footer>
+        </body>
+        </html>
+      `;
+  
+      // Create a new Blob object with the content and save it as an HTML file
+      const blob = new Blob([animalPageContent], { type: "text/html" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${animal.name.toLowerCase().replace(/\s+/g, '-')}-details.html`;  // Animal page name in URL format
+  
+      // Trigger the download
+      link.click();
+    }
+  
+    // Edit animal details
+    function editAnimal(index) {
+      const animal = storedAnimals[index];
+      document.getElementById("name").value = animal.name;
+      document.getElementById("species").value = animal.species;
+      document.getElementById("age").value = animal.age;
+      document.getElementById("breed").value = animal.breed;
+      document.getElementById("gender").value = animal.gender;
+      document.getElementById("fix").value = animal.fix;
+      document.getElementById("desc").value = animal.desc;
+      document.getElementById("fee").value = animal.fee;
+
+  
+      // Set the existing image as a dataset on the input field (if any)
+      document.getElementById("image").dataset.existingImage = animal.image || null;
+  
+      // Store the index of the animal being edited for later updating
+      document.getElementById("add-animal-form").dataset.editIndex = index;
+    }
+  
+    // Add the image to the form if there's an existing one when editing
+    addAnimalForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+  
+      const name = document.getElementById("name").value;
+      const species = document.getElementById("species").value;
+      const age = document.getElementById("age").value;
+      const breed = document.getElementById("breed").value;
+      const gender = document.getElementById("gender").value;
+      const fix = document.getElementById("fix").value;
+      const desc = document.getElementById("desc").value;
+      const fee = document.getElementById("fee").value;
+      const imageInput = document.getElementById("image");
+      let image = null;
+  
+      // If the form is in edit mode
+      const editIndex = document.getElementById("add-animal-form").dataset.editIndex;
+  
+      // If the image input has a file, read it
+      if (imageInput.files && imageInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          image = e.target.result;
+  
+          // If editing an existing animal, update the animal at editIndex
+          if (editIndex !== undefined) {
+            storedAnimals[editIndex] = { name, species, age, breed, gender, fix, desc, fee, image };
+          } else {
+            // Otherwise, add a new animal
+            const newAnimal = { name, species, age, breed, gender, fix, desc, fee, image };
+            storedAnimals.push(newAnimal);
+          }
+  
+          localStorage.setItem("animals", JSON.stringify(storedAnimals));
+  
+          // Generate a separate page
+          createAnimalPage(storedAnimals[editIndex] || newAnimal);
+  
+          displayAnimals(); // Refresh animal list after adding or editing
+          addAnimalForm.reset(); // Reset form after submission
+  
+          // Remove the editIndex from the form after update
+          delete document.getElementById("add-animal-form").dataset.editIndex;
+        };
+        reader.readAsDataURL(imageInput.files[0]);
+      } else {
+        // If no image is uploaded, keep the previous image if it exists
+        const existingImage = imageInput.dataset.existingImage || null;
+        const newAnimal = { name, species, age, breed, gender, fix, desc, fee, image: existingImage };
+  
+        if (editIndex !== undefined) {
+          storedAnimals[editIndex] = newAnimal; // Update the existing animal
+        } else {
+          storedAnimals.push(newAnimal); // Add new animal
+        }
+  
+        localStorage.setItem("animals", JSON.stringify(storedAnimals));
+  
+        displayAnimals(); // Refresh animal list after adding or editing
+        addAnimalForm.reset(); // Reset form after submission
+  
+        // Remove the editIndex from the form after update
+        delete document.getElementById("add-animal-form").dataset.editIndex;
+      }
+    });
+  
+    // Delete animal from the list
+    function deleteAnimal(index) {
+      storedAnimals.splice(index, 1);
+      localStorage.setItem("animals", JSON.stringify(storedAnimals));
+      displayAnimals();
+    }
+  
+    // Initial display of animals
+    displayAnimals();
+ 
+  //  if (localStorage.getItem("loggedIn") !== "true") {//
+      //alert("You must log in first.");//
+     // window.location.href = "login.html";//
+  //  } //
+  </script>
+
+</body>
+</html>

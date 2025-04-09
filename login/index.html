@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Employee Login | TBA</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+
+<body>
+    <header>
+        <h1>The Better Animal Association</h1>
+        <nav>
+          <a href="../index/index.html">Home</a>
+          <a href="../about/index.html">About</a>
+          <a href="../adopt/index.html">Adopt</a>
+          <a href="../login/index.html">Employee Login</a>
+        </nav>
+    </header>
+
+  <main>
+    <section class="login-section">
+        <h2>Employee Login</h2>
+        <p> test login: employee; password123</p>
+        <form action="#" method="POST" class="login-form">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required />
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required />
+
+            <button type="submit"> Log In</button>
+        </form>
+    </section>
+  </main>
+
+
+  <footer>
+    <p>&copy; 2025 TBA - The Better Animal Association</p>
+  </footer>
+
+
+<script>
+    document.querySelector("form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const user = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
+  
+      if (user === "employee" && pass === "password123") {
+        localStorage.setItem("loggedIn", "true");
+        window.location.href = "../dashboard/index.html";
+      } else {
+        alert("Invalid credentials");
+      }
+    });
+  </script>  
+
+</body>
+</html>
