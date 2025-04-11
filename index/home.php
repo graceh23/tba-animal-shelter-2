@@ -1,3 +1,17 @@
+<?php
+// Connect to the database
+$host = "localhost";     // or your server IP
+$user = "root";          // your MySQL username
+$pass = "";              // your MySQL password
+$db = "login_db";        // your database name
+
+$conn = new mysqli($host, $user, $pass, $db);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,7 +58,8 @@
         <br>
 
         <section class="animal-list" id="animal-list">
-            <!-- Animal list will be populated dynamically from localStorage -->
+            <!-- Animal list will be populated dynamically from database-->
+             
         </section>
     </main>
 
