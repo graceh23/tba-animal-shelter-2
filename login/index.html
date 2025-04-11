@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("Location: index.html");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,8 +29,7 @@
   <main>
     <section class="login-section">
         <h2>Employee Login</h2>
-        <p> test login: employee; password123</p>
-        <form action="#" method="POST" class="login-form">
+        <form action="login.php" method="POST" class="login-form">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required />
 
@@ -39,21 +46,6 @@
     <p>&copy; 2025 TBA - The Better Animal Association</p>
   </footer>
 
-
-<script>
-    document.querySelector("form").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const user = document.getElementById("username").value;
-      const pass = document.getElementById("password").value;
-  
-      if (user === "employee" && pass === "password123") {
-        localStorage.setItem("loggedIn", "true");
-        window.location.href = "../dashboard/index.html";
-      } else {
-        alert("Invalid credentials");
-      }
-    });
-  </script>  
 
 </body>
 </html>
