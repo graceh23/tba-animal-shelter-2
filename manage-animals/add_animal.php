@@ -14,23 +14,25 @@ if ($conn->connect_error) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
     $species = $_POST['species'];
-    $age = $_POST['age'];
+    $age = intval($_POST['age']);
     $breed = $_POST['breed'];
     $gender = $_POST['gender'];
     $fix = $_POST['fix'];
-    $desc = $_POST['desc'];
+    $description = $_POST['desc'];
     $fee = $_POST['fee'];
+    $vaccinated = $_POST['vaccinated'];
+    $trained = $_POST['trained'];
 
-    // Insert into database without image
-    $stmt = $conn->prepare("INSERT INTO animals (name, species, age, breed, gender, fix, description, fee, available) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)");
-    $stmt->bind_param("ssisssss", $name, $species, $age, $breed, $gender, $fix, $desc, $fee);
+
+    $stmt = $conn->prepare("INSERT INTO animals (name, species, age, breed, gender, fix, description, fee, vaccinated, trained) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssisssssss", $name, $species, $age, $breed, $gender, $fix, $description, $fee, $vaccinated, $trained);
 
     if ($stmt->execute()) {
         echo "Animal Added! Redirecting in 3 seconds...";
-        header("refresh:3;url=../manage-animals/index.html");          
+        header("refresh:3;url=../manage-animals/");
         exit();
     } else {
-        echo "❌ SQL Error: " . $stmt->error;
+        echo "SQL Error: " . $stmt->error;
     }
 }
 ?>
