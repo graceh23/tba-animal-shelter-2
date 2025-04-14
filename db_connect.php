@@ -1,4 +1,4 @@
-<?php
+?php
 // Connect to the database
 $host = "localhost";     // or your server IP
 $user = "root";          // your MySQL username

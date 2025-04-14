@@ -22,10 +22,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fee = $_POST['fee'];
     $vaccinated = $_POST['vaccinated'];
     $trained = $_POST['trained'];
+    $special = $_POST ['special'];
 
-
-    $stmt = $conn->prepare("INSERT INTO animals (name, species, age, breed, gender, fix, description, fee, vaccinated, trained) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssisssssss", $name, $species, $age, $breed, $gender, $fix, $description, $fee, $vaccinated, $trained);
+    $stmt = $conn->prepare("INSERT INTO animals (name, species, age, breed, gender, fix, description, fee, vaccinated, trained, special) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssissssssss", $name, $species, $age, $breed, $gender, $fix, $description, $fee, $vaccinated, $trained, $special,);
 
     if ($stmt->execute()) {
         echo "Animal Added! Redirecting in 3 seconds...";

@@ -19,20 +19,20 @@ if (!$id) {
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $_POST['name'];
-    $species = $_POST['species'];
-    $age = intval($_POST['age']);  //Cast to integer    
-    $breed = $_POST['breed'];
-    $gender = $_POST['gender'];
-    $fix = $_POST['fix'];
-    $description = $_POST['desc'];
-    $image = ""; // Placeholder     
-    $vaccinated = $_POST['vaccinated'];
-    $trained = $_POST['trained'];
-    $fee = $_POST['fee'];
+  $name = $_POST['name'];
+  $species = $_POST['species'];
+  $age = intval($_POST['age']);
+  $breed = $_POST['breed'];
+  $gender = $_POST['gender'];
+  $fix = $_POST['fix'];
+  $description = $_POST['desc'];
+  $fee = $_POST['fee'];
+  $vaccinated = $_POST['vaccinated'];
+  $trained = $_POST['trained'];
+  $special = $_POST ['special'];
 
-    $stmt = $conn->prepare("UPDATE animals SET (name=?, species=?, age=?, breed=?, gender=?, fix=?, description=?, fee=?, vaccinated=?, trained=?, WHERE id=?");
-    $stmt->bind_param("ssisssssss", $name, $species, $age, $breed, $gender, $fix, $description, $fee, $vaccinated, $trained);
+    $stmt = $conn->prepare("UPDATE animals SET (name=?, species=?, age=?, breed=?, gender=?, fix=?, description=?, fee=?, vaccinated=?, trained=?, special=?, WHERE id=?");
+    $stmt->bind_param("ssissssssss", $name, $species, $age, $breed, $gender, $fix, $description, $fee, $vaccinated, $trained, $special);
     
     if ($stmt->execute()) {
         echo "Animal deleted! Redirecting in 3...";
@@ -100,6 +100,12 @@ if (!$animal) {
     <select name="trained" required>
       <option value="Yes" <?= $animal['trained'] == 'Yes' ? 'selected' : '' ?>>Yes</option>
       <option value="No" <?= $animal['trained'] == 'No' ? 'selected' : '' ?>>No</option>
+    </select>
+
+    <label>Health Concerns? </label>
+    <select name="special" required>
+      <option value="Yes" <?= $animal['special'] == 'Yes' ? 'selected' : '' ?>>Yes</option>
+      <option value="No" <?= $animal['special'] == 'No' ? 'selected' : '' ?>>No</option>
     </select>
 
     <label>Description:</label>

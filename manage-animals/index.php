@@ -11,6 +11,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
     $species = $_POST['species'];
@@ -22,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fee = $_POST['fee'];
     $vaccinated = $_POST['vaccinated'];
     $trained = $_POST['trained'];
+    $special = $_POST['special'];
 }
 ?>
 
@@ -86,6 +88,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <option value="No">No</option>
         </select>
 
+        <label for="special">Health Concerns? (Describe in Description):</label>
+        <select name="special" id="special">
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+        </select>
 
         <label for="fee">Fee:</label>
         <input type="text" name="fee" id="fee" required />

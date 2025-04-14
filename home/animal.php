@@ -39,17 +39,26 @@ $animal = $result->fetch_assoc();
 
     <main>
         <?php if ($animal): ?>
+            <section class="animal-profile">
+            <img src="../images/cat.jpg" class="animal-image">
+            <div class="animal-info">
             <h2><?= htmlspecialchars($animal['name']) ?></h2>
-            <p><strong>Breed:</strong> <?= htmlspecialchars($animal['breed']) ?></p>
-            <p><strong>Age:</strong> <?= htmlspecialchars($animal['age']) ?></p>
-            <p><strong>Species:</strong> <?= htmlspecialchars($animal['species']) ?></p>
-            <p><strong>Gender:</strong> <?= htmlspecialchars($animal['gender']) ?></p>
-            <p><strong>Fixed:</strong> <?= htmlspecialchars($animal['fix']) ?></p>
-            <p><strong>Description:</strong> <?= htmlspecialchars($animal['description']) ?></p>
-            <p><strong>Fee:</strong> $<?= htmlspecialchars($animal['fee']) ?></p>
-            <p><strong>Vaccinated?</strong> <?= htmlspecialchars($animal['vaccinated']) ?></p>
-            <p><strong>Trained?</strong> <?= htmlspecialchars($animal['trained']) ?></p>
-
+            <ul>
+                <li><strong>Breed:</strong> <?= htmlspecialchars($animal['breed']) ?></li>
+                <li><strong>Age:</strong> <?= htmlspecialchars($animal['age']) ?></li>
+                <li><strong>Species:</strong> <?= htmlspecialchars($animal['species']) ?></li>
+                <li><strong>Gender:</strong> <?= htmlspecialchars($animal['gender']) ?></li>
+                <li><strong>Fixed:</strong> <?= htmlspecialchars($animal['fix']) ?></li>
+                <li><strong>Description:</strong> <?= htmlspecialchars($animal['description']) ?></li>
+                <li><strong>Fee:</strong> $<?= htmlspecialchars($animal['fee']) ?></li>
+                <li><strong>Vaccinated?</strong> <?= htmlspecialchars($animal['vaccinated']) ?></li>
+                <li><strong>Trained?</strong> <?= htmlspecialchars($animal['trained']) ?></li>
+                <li><strong>Health Concerns?</strong> <?= htmlspecialchars($animal['special']) ?></li>
+            </ul>
+            </div>
+            </section>
+            <a href="../adopt/" class="adopt-button"> Adopt!</a>
+            
 
         <?php else: ?>
             <p>Animal not found.</p>

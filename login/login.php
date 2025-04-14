@@ -24,17 +24,15 @@ if ($user = $result->fetch_assoc()) {
     // Check password
     if (password_verify($password, $user['password'])) {
         $_SESSION['username'] = $user['username'];
-        header("Location: ../dashboard/index.html");
+        header("Location: ../dashboard/");
         exit();
     } else {
         echo "Incorrect password.";
-        header("Location: ../login/index.html");
+        header("Location: ../login/");
     }
 } else {
     echo "User not found.";
-    header("Location: ../login/index.html");
+    header("Location: ../login/");
 }
-
-
 
 ?>
